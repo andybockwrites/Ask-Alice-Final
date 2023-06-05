@@ -1,0 +1,142 @@
+button {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.body-element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.font-display {
+    font-family: 'Playfair Display', serif;
+}
+.font-display-bold {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.brown {
+    color: #362412;
+}
+
+.rabbit {
+    width: 20%;
+    height: 20%;
+    transform: rotate(11deg);
+    margin: 50px;
+}
+
+.app-name {
+    height: 75px;
+    background-color: whitesmoke;
+    border-bottom: solid 8px #F57676;
+    display: flex;
+    padding: 7px;
+    margin: 1%;
+    align-items: center;
+    font-size: xx-large;
+    justify-content: center;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: whitesmoke;
+    height: 285px;
+    align-items: flex-start;
+    padding: 1%;
+    margin: 5px;
+}
+
+.calendar-container-from {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 100px;
+    text-align: center;
+}
+
+.calendar-container-to {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 100px;
+    text-align: center;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: rgb(245, 120, 17);
+    width: 180px;
+}
+
+.body-container {
+    display: flex;
+    justify-content: center;
+}
+
+.uk-link:hover {
+    color: beige;
+    background-color: red;
+}
+
+.empty-space {
+    height: 200px;
+}
+
+
+    
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .instructions,
+    .body-element,
+    .search-container,
+    .search,
+    .calendar-container-from,
+    .calendar-container-to,
+    #from,
+    #to {
+        height: 75%;
+        width: 75%;
+        justify-content: center;
+    }};
+
+    .app-name {
+        height: 75%;
+        width: 100%;
+    };
+
+@media (max-width: 767px) {
+    .instructions,
+    .body-element,
+    .search-container,
+    .search,
+    .calendar-container-from,
+    .calendar-container-to,
+    #from,
+    #to {
+        height: 50%;
+        width: 50%;
+    }
+    .app-name {
+        height: 50%;
+        width: 100%;
+    }
+};
