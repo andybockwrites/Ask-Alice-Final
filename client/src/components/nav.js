@@ -2,8 +2,8 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <nav class="nav navbar-light">
-      <h1 class=" brown font-display-bold">Ask Alice!</h1>
+    <nav className="nav navbar-light">
+      <h1 className=" brown font-display-bold">Ask Alice!</h1>
     </nav>
   );
 };
