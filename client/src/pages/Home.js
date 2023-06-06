@@ -1,5 +1,6 @@
 import React from "react";
 import Nav from "../components/nav";
+import bunny from "../assets/bunny.jpg";
 
 const Home = ({ currentPage, handlePageChange }) => {
   return (
@@ -14,7 +15,7 @@ const Home = ({ currentPage, handlePageChange }) => {
             To go down the Rabbit Hole, scroll down and select two dates below!
           </h5>
         </div>
-        <img src="./photos/bunny.jpg" alt="picture of rabbit" class="rabbit" />
+        <img src={bunny} alt="a white rabbit" class="rabbit" />
         <div class="search-container">
           <div class="calendar-container-from">
             <h5 class="brown font-display-bold">Start Date</h5>
@@ -45,3 +46,5 @@ const Home = ({ currentPage, handlePageChange }) => {
     </div>
   );
 };
+
+export default Home;
