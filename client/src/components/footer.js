@@ -47,7 +47,7 @@ const Footer = () => {
         <h6 className=" brown uk-text-small uk-text-lighter">The Rabbit says:</h6>
         <h5 className="brown uk-text-large">"There are <span id="count2"></span> recalls in this rabbit hole!"</h5>
         <h3 className="brown uk-text-large uk-text-bold">What do you want to do now?</h3>
-        <p>Click the bunny to feed him the carrot! Cross your fingers first though, one can never be too sure.</p>
+        <blockquote>Click the bunny to feed it a carrot! Cross your fingers first, though. One can never be too sure...</blockquote>
       </div>
         <img
           src={bunny}

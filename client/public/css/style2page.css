@@ -21,7 +21,7 @@ h2 {
 
 h4 {
     font-size: 30px;
-    margin: 0% ;
+    margin-left: 18%;
 }
 
 h3 {
@@ -90,6 +90,7 @@ footer {
     width: 300px;
     background-color: whitesmoke;
     padding: 3%;
+    margin-left: 15%;
 }
 
 .product-information {
