@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import bunny from "../assets/bunny.jpg";
 
 const ImageField = ({ userId }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -43,8 +44,9 @@ const ImageField = ({ userId }) => {
   return (
     <div>
       <img
-        src="client/src/assets/bunny.jpg" 
+        src={bunny} 
         alt="White Rabbit"
+        className="rabbit-2"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleBunnyClick}

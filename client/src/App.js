@@ -1,28 +1,59 @@
 import React from 'react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import Error from './pages/Error';
 import Header from './components/header';
+import LoginForm from './components/loginForm';
 import Footer from './components/footer';
 import logo from './logo.svg';
 import './App.css';
 
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <Router>
-      <div>
-        <Header/>
+    <ApolloProvider client={client}>
+      <Router>
         <div>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/searchresults" element={<SearchResults />} />
-            <Route path="*" element={<Error />} />
-          </Routes>
+          <Header />
+          <div>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/searchresults" element={<SearchResults />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
-      );
+      </Router>
+    </ApolloProvider>
+  );
 }
 
-      export default App;
+export default App;
