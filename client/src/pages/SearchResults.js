@@ -12,12 +12,11 @@ function SearchResults({ currentPage, handlePageChange }) {
                 <aside className="uk-width-1-3">
                     <div className="image-container">
                         <img id="image-api" alt="meds" src={images[imageChoice]} />
-                            <a id="api-source" href="https://www.pexels.com" className="link">Photos provided by Pexels</a>
                     </div>
+                    <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
                         <p className="text-past" id="text-past"></p>
-
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">
