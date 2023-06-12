@@ -40,7 +40,11 @@ button {
     padding: 7px;
     align-items: center;
     font-size: xx-large;
-    justify-content: center;
+}
+
+
+h1 {
+    margin: 0;
 }
 
 .instructions {

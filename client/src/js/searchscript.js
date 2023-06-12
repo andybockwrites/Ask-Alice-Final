@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const api_key = "xlozztFokJwpqfVlSdbxiEsnNSdEQwdTvLg0rjDvPh6lR95dFqOKpQpC";
 var photos;
 var photolimit = 10;

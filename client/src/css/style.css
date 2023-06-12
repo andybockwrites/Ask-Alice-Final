@@ -40,7 +40,10 @@ button {
     padding: 7px;
     align-items: center;
     font-size: xx-large;
-    justify-content: center;
+}
+
+.login{
+    justify-self: end;
 }
 
 .instructions {

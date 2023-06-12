@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 $(function () {
     var dateFormat = "mm/dd/yy",
         from = $("#from")
