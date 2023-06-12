@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import bunny from "../assets/bunny.jpg";
 
 const Home = ({ currentPage, handlePageChange }) => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const handleSearchClicked = (event) => {
+    const start = document.getElementById("from").value;
+    const end = document.getElementById("to").value;
+    setStartDate(start);
+    setEndDate(end);
+
+    console.log(startDate, endDate);
+  }
+
   return (
     <div>
       <div className="body-element">
@@ -27,15 +39,11 @@ const Home = ({ currentPage, handlePageChange }) => {
         </div>
         <div className="nav-buttons">
           <button
-          
-            a
+            className="search uk-link brown font-display nav-link"
             href="#searchResults"
-            onclick={() => {
-              handlePageChange("searchResults");
+            onClick={() => {
+              handleSearchClicked();
             }}
-            className={
-              currentPage === "searchResults" ? "search uk-link brown font-display nav-link active" : "search uk-link brown font-display nav-link"
-            }
           >
             Recall Rabit Hole
           </button>
