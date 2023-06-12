@@ -40,8 +40,18 @@ button {
     padding: 7px;
     align-items: center;
     font-size: xx-large;
+    margin:0;
 }
 
+.modalButton {
+    background-color: #F57676!important;
+    border-color: #F57676!important;
+}
+
+.modalButton:hover {
+    background-color: #ebacac!important;
+    border-color: #ebacac!important;
+}
 
 h1 {
     margin: 0;

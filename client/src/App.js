@@ -11,7 +11,6 @@ import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import Error from './pages/Error';
 import Header from './components/header';
-import LoginForm from './components/loginForm';
 import Footer from './components/footer';
 import logo from './logo.svg';
 import './App.css';
@@ -46,7 +45,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/searchresults" element={<SearchResults />} />
-              <Route path="/login" element={<LoginForm />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </div>
