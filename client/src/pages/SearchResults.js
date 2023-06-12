@@ -1,14 +1,17 @@
 import React from 'react';
 import Footer from '../components/footer';
 import bunny from "../assets/bunny.jpg";
+import images from '../utils/images';
 
 function SearchResults({ currentPage, handlePageChange }) {
+    const imageChoice = Math.floor(Math.random() * 5);
+
     return (
         <div>
             <div class="uk-flex">
                 <aside class="uk-width-1-3">
                     <div class="image-container">
-                        <img id="image-api" alt="meds" />
+                        <img id="image-api" alt="meds" src={images[imageChoice]} />
                             <a id="api-source" href="https://www.pexels.com" class="link">Photos provided by Pexels</a>
                     </div>
                     <div class="recalled" id="recalled">
