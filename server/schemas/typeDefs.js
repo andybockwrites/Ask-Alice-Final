@@ -23,6 +23,7 @@ const typeDefs = gql`
     type Query {
         users: [User]
         user(username: String!): User
+        me: User
         carrots(username: String): [Carrot]
         carrotsByDrugName(drugName: String!): [Carrot]
     }

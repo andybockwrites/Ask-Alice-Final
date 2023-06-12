@@ -10,6 +10,14 @@ const resolvers = {
         user: async (parent, { username }) => {
             return User.findOne({ username }).populate('carrots');
         },
+        me: async (parent, args, context) => {
+            if(context.user) {
+                const userData = await User.findOne({ _id: context.user._id })
+                .populate('carrots');
+                return userData;
+            }
+            throw new AuthenticationError('Not logged in');
+        },
         carrots: async (parent, { username }) => {
             const params = username ? { username } : {};
             return Carrot.find(params).sort({ createdAt: -1 });
