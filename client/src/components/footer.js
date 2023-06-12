@@ -1,4 +1,5 @@
 import React from "react";
+import bunny from "../assets/bunny.jpg";
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
           <h5 className="brown uk-text-large">"There are <span id="count2"></span> recalls in this rabbit hole!"</h5>
           <h3 className="brown uk-text-large uk-text-bold">What do you want to do now?</h3>
       </div>
-      <img src="./photos/bunny.jpg"alt="picture of rabbit" className="rabbit-2"/>
+      <img src={bunny}alt="white rabbit" className="rabbit-2"/>
     </footer>
   );
 };
