@@ -1,11 +1,9 @@
 import React from "react";
-import Nav from "../components/nav";
 import bunny from "../assets/bunny.jpg";
 
 const Home = ({ currentPage, handlePageChange }) => {
   return (
     <div>
-      <Nav />
       <div className="body-element">
         <div className="instructions">
           <h3 className="brown font-display">

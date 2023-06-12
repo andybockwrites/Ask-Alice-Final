@@ -16,3 +16,5 @@ function Error({ currentPage, handlePageChange}) {
         </div>
     )
 }
+
+export default Error;
