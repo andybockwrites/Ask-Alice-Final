@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
-import Modal from "react-bootstrap/Modal";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
-import { useParams } from "react-router-dom";
 
-const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+function LoginModal(props) {
+    const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   
-  const { params } = useParams();
-
-  const [show, setShow] = useState(false);
-  console.log(params);
 
   // declaring loginUser with useMutation || both currently undefined   
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (error) setShowAlert(true);
@@ -62,11 +56,14 @@ const LoginForm = () => {
       password: "",
     });
   };
-
   return (
-    <>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
             <Modal.Title>Log In</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -114,6 +111,7 @@ const LoginForm = () => {
                 disabled={!(userFormData.email && userFormData.password)}
                 type="submit"
                 variant="success"
+                className="modalButton"
               >
                 Submit
               </Button>
@@ -121,9 +119,8 @@ const LoginForm = () => {
           </Modal.Body>
           <Modal.Footer>
           </Modal.Footer>
-        </Modal>
-    </>
+    </Modal>
   );
 };
 
-export default LoginForm;
+export default LoginModal;

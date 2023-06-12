@@ -1,14 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import LoginForm from "./loginForm";
+import LoginModal from "./loginModal";
 
 const Header = () => {
-  const [show, setShow] = useState(false);
-
-  const handleShow = () => {
-    setShow(!show);
-    console.log(show);
-  };
+  const [modalShow, setModalShow] = useState(false);
 
   return (
     <header className="app-name uk-container-expand uk-grid">
@@ -17,9 +12,13 @@ const Header = () => {
         <h1 className="brown font-display-bold">Ask Alice!</h1>
       </div>
       <div className="uk-width-1-3 uk-flex uk-flex-center">
-        <button onClick={handleShow}>Log In</button>
+        <button onClick={() => setModalShow(true)}>Log In</button>
       </div>
-      <LoginForm showing={show}/>
+
+      <LoginModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </header>
   );
 };
