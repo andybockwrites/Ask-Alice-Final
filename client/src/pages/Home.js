@@ -1,21 +1,37 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bunny from "../assets/bunny.jpg";
+import dayjs from "dayjs";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Home = ({ currentPage, handlePageChange }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
-  const handleSearchClicked = (event) => {
-    const start = document.getElementById("from").value;
-    const end = document.getElementById("to").value;
-    setStartDate(start);
-    setEndDate(end);
+  let navigate = useNavigate();
 
-    console.log(startDate, endDate);
+  const handleSearchClicked = async (event) => {
+    let start = startDate;
+    let end = endDate;
+
+    if (!start || !end) {
+      alert("Please select a start and end date");
+      return;
+    }
+
+    start = await dayjs(start).format("YYYYMMDD");
+    end = await dayjs(end).format("YYYYMMDD");
+
+    console.log(start, end);
+
+    let path = `/searchresults/?date1=${start}&date2=${end}`
+
+    navigate(path);
   }
 
   return (
-    <div>
+    <>
       <div className="body-element">
         <div className="instructions">
           <h3 className="brown font-display">
@@ -30,12 +46,16 @@ const Home = ({ currentPage, handlePageChange }) => {
         <div className="search-container">
           <div className="calendar-container-from">
             <h5 className="brown font-display-bold">Start Date</h5>
-            <input id="from"></input>
+            <DatePicker id="from"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}/>
           </div>
           <h3 className="brown font-display-bold">TO</h3>
           <div className="calendar-container-to">
             <h5 className="brown font-display-bold">End Date</h5>
-            <input id="to"></input>
+            <DatePicker id="to"
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}/>
           </div>
         </div>
         <div className="nav-buttons">
@@ -50,7 +70,7 @@ const Home = ({ currentPage, handlePageChange }) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

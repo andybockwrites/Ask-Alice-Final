@@ -1,10 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Footer from '../components/footer';
-import bunny from "../assets/bunny.jpg";
 import images from '../utils/images';
+import enterRabbitHole from '../utils/apiCall';
 
-function SearchResults({ currentPage, handlePageChange }) {
+
+function SearchResults() {
     const imageChoice = Math.floor(Math.random() * 5);
+    const [queryParameters] = useSearchParams();
+    const date1 = queryParameters.get('date1');
+    const date2 = queryParameters.get('date2');
+
+    const [searchResults, setSearchResults] = useState([]);
+
+    useEffect(() => {
+        enterRabbitHole(date1, date2).then((data) => {
+            setSearchResults(data.results);
+            console.log(data.results);
+        });
+    }, []);
+
+    console.log(date1, date2);
 
     return (
         <div>
@@ -47,7 +63,7 @@ function SearchResults({ currentPage, handlePageChange }) {
                                 not refrigerated at certain Amerisource Bergen Drug Corp distribution centers."</p>
                         </div>
                         <div className="nav-container">
-                            <button className="uk-link back-button"><a href="./index.html">Back to Search Dates</a></button>
+                            <button className="uk-link back-button"><a href="../">Back to Search Dates</a></button>
                             <button id="continuebtn" className="uk-link">Continue Down the Rabbit Hole!</button>
                         </div>
                     </div>
