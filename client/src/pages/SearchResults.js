@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../components/footer';
 import images from '../utils/images';
 import enterRabbitHole from '../utils/apiCall';
+import dayjs from 'dayjs';
 
 
 function SearchResults() {
@@ -10,19 +11,53 @@ function SearchResults() {
     const [queryParameters] = useSearchParams();
     const date1 = queryParameters.get('date1');
     const date2 = queryParameters.get('date2');
-
     const [searchResults, setSearchResults] = useState([]);
+    const searchResultsRef = useRef(searchResults);
+    searchResultsRef.current = searchResults;
+    const [resultPick, setResultPick] = useState();
 
+    async function handleContinue() {
+        const randomResult = await Math.floor(Math.random() * searchResults.length);
+        setResultPick(searchResults[randomResult]);
+        console.log(resultPick);
+    }
+
+    
     useEffect(() => {
-        enterRabbitHole(date1, date2).then((data) => {
-            setSearchResults(data.results);
-            console.log(data.results);
-        });
+        if(date1 && date2){
+            enterRabbitHole(date1, date2).then((data) => {
+                if(data.results){
+                    setSearchResults(data.results);
+                    console.log(searchResults);
+                    handleContinue()
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+        setTimeout(async function(){
+            if(searchResultsRef.current && searchResultsRef.current.length<=0){
+                document.getElementById("Loading").innerHTML = "No results found. Please try again.";
+                const returnButton = document.createElement("button");
+                returnButton.className = "uk-link back-button";
+                returnButton.innerHTML = "<a href='../'>Back to Search Dates</a>";
+                console.log('adding button')
+                document.getElementById("loadingDiv").appendChild(returnButton);
+            }
+        }, 3000);
     }, []);
 
     console.log(date1, date2);
+    console.log(searchResults);
 
-    return (
+    
+
+    return (!searchResults || searchResults.length===0) ? (
+    <div id='loadingDiv' className='uk-container uk-margin-small-left'>
+        <h1 id='Loading'>Loading...</h1>
+    </div>
+    ) : 
+    ( 
         <div>
             <div className="uk-flex">
                 <aside className="uk-width-1-3">
@@ -41,30 +76,26 @@ function SearchResults() {
                         <div className="uk-flex-inline uk-flex-between uk-width-1-1">
 
                             <div className="right">
-                                <h4 className="brown font-display" id="place">PA , Chesterbrook</h4>
-                                <h3 className="brown font-display-bold" id="status">Status: <span id="spanStatus">"Terminated"</span></h3>
+                                <h4 className="brown font-display" id="place">{resultPick.state}, {resultPick.city}</h4>
+                                <h3 className="brown font-display-bold" id="status">Status: <span id="spanStatus">"{resultPick.status}"</span></h3>
                             </div>
                             <div className="newInfo uk-flex-right">
 
-                                <h4 className="brown font-display">Recall Date: <span id="iniDate">1/1/12</span> </h4>
-                                <h3 className="brown font-display-bold" id="">Firm: <span id="firm">Company</span></h3>
+                                <h4 className="brown font-display">Recall Date: <span id="iniDate">{dayjs(resultPick.recall_initiation_date).format('M/D/YY')}</span> </h4>
+                                <h3 className="brown font-display-bold" id="">Firm: <span id="firm">{resultPick.recalling_firm}</span></h3>
                             </div>
                         </div>
                         <div className="comment uk-margin-small right" id="box">
                             <h5 className="uk-text-bold">Product Description:</h5>
-                            <p className="product_description" id="product_description:">"Ifosfamide Injection 3g/60 mL, Single dose vial, Rx only, Sterile,
-                                For Intravenous Use, Refrigerate at 2-8 degrees celcius, Distributed
-                                by Pfizer Labs, Division of Pfizer Inc., New York, NY 10017, NDC
-                                0069-4496-22"</p>
+                            <p className="product_description" id="product_description:">"{resultPick.product_description}"</p>
                         </div>
                         <div className="comment uk-margin-small right" id="box2">
                             <h5 className="brown uk-text-bold">Reason for recall:</h5>
-                            <p className="brown reason" id="reason">"Temperature abuse: Certain vials of Ifosfamide IV products were
-                                not refrigerated at certain Amerisource Bergen Drug Corp distribution centers."</p>
+                            <p className="brown reason" id="reason">"{resultPick.reason_for_recall}"</p>
                         </div>
                         <div className="nav-container">
                             <button className="uk-link back-button"><a href="../">Back to Search Dates</a></button>
-                            <button id="continuebtn" className="uk-link">Continue Down the Rabbit Hole!</button>
+                            <button id="continuebtn" className="uk-link" onClick={handleContinue}>Continue Down the Rabbit Hole!</button>
                         </div>
                     </div>
                 </div>
