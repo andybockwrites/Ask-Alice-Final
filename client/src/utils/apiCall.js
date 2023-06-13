@@ -5,8 +5,7 @@ const enterRabbitHole = async (date1, date2) => {
 
         return response;
     } catch (error) {
-        console.log(error)
-        return error;
+        console.log(error);
     }
 }
 
