@@ -15,9 +15,11 @@ function SearchResults() {
     const searchResultsRef = useRef(searchResults);
     searchResultsRef.current = searchResults;
     const [resultPick, setResultPick] = useState({});
+    const [previouseResultPick, setPreviousResultPick] = useState({});
 
     const handleContinue = async function () {
         const randomResult = Math.floor(Math.random() * searchResults.length);
+        setPreviousResultPick(resultPick);
         setResultPick(searchResults[randomResult]);
     }
 
@@ -62,7 +64,7 @@ function SearchResults() {
                     <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
-                        <p className="text-past" id="text-past"></p>
+                        <p className="text-past" id="text-past">{previouseResultPick.product_description.split(',')[0]}</p>
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">

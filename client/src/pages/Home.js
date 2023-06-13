@@ -48,14 +48,24 @@ const Home = ({ currentPage, handlePageChange }) => {
             <h5 className="brown font-display-bold">Start Date</h5>
             <DatePicker id="from"
             selected={startDate}
-            onChange={(date) => setStartDate(date)}/>
+            onChange={(date) => setStartDate(date)}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            minDate={dayjs("20120101").toDate()}
+            maxDate={new Date()}/>
           </div>
           <h3 className="brown font-display-bold">TO</h3>
           <div className="calendar-container-to">
             <h5 className="brown font-display-bold">End Date</h5>
             <DatePicker id="to"
             selected={endDate}
-            onChange={(date) => setEndDate(date)}/>
+            onChange={(date) => setEndDate(date)}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            minDate={dayjs("20120101").toDate()}
+            maxDate={new Date()}/>
           </div>
         </div>
         <div className="nav-buttons">
