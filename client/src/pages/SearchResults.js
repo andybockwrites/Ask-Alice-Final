@@ -49,7 +49,7 @@ function SearchResults() {
 
     console.log(date1, date2);
     console.log(searchResults);
-
+    console.log(resultPick);
     
 
     return (!searchResults || searchResults.length===0) ? (
