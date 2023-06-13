@@ -4,6 +4,7 @@ import Footer from '../components/footer';
 import images from '../utils/images';
 import enterRabbitHole from '../utils/apiCall';
 import dayjs from 'dayjs';
+import Auth from '../utils/auth';
 
 
 function SearchResults() {
@@ -95,7 +96,11 @@ function SearchResults() {
                         </div>
                         <div className="nav-container">
                             <button className="uk-link back-button"><a href="../">Back to Search Dates</a></button>
-                            <button id="continuebtn" className="uk-link" onClick={handleContinue}>Continue Down the Rabbit Hole!</button>
+                            {Auth.loggedIn() ? (
+                                <button id="continuebtn" className="uk-link" onClick={handleContinue}>Continue Down the Rabbit Hole!</button>
+                            ) : (
+                                <p>Log in to continue down the rabbit hole!</p>
+                            )}
                         </div>
                     </div>
                 </div>
