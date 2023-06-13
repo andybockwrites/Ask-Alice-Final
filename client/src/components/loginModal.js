@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations";
+import { LOGIN_USER, ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
@@ -18,12 +18,13 @@ function LoginModal(props) {
 
   // declaring loginUser with useMutation || both currently undefined   
   const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [addUser, { error: addError }] = useMutation(ADD_USER);
 
 
   useEffect(() => {
-    if (error) setShowAlert(true);
+    if (error || addError) setShowAlert(true);
     else setShowAlert(false);
-  }, [error]);
+  }, [error, addError]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -41,14 +42,26 @@ function LoginModal(props) {
     }
 
     // use loginUser function || not yet defined
-    try {
-      const { data } = await loginUser({
-        variables: { ...userFormData },
-      });
+    if(!signingUp){
+      try {
+        const { data } = await loginUser({
+          variables: { ...userFormData },
+        });
+  
+        Auth.login(data.login.token);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      try {
+        const { data } = await addUser({
+          variables: { ...userFormData },
+        });
 
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
+        Auth.login(data.addUser.token);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     setUserFormData({
