@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import LoginModal from "./loginModal";
+import Auth from "../utils/auth";
 
 const Header = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -12,7 +13,11 @@ const Header = () => {
         <h1 className="brown font-display-bold">Ask Alice!</h1>
       </div>
       <div className="uk-width-1-3 uk-flex uk-flex-center">
-        <button onClick={() => setModalShow(true)}>Log In</button>
+      {Auth.loggedIn() ? (
+        <button onClick={() => Auth.logout()}>Log Out</button>
+        ) : (
+          <button onClick={() => setModalShow(true)}>Log In</button>
+        )}
       </div>
 
       <LoginModal

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useLayoutEffect, useState, useRef} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../components/footer';
 import images from '../utils/images';
@@ -14,22 +14,26 @@ function SearchResults() {
     const [searchResults, setSearchResults] = useState([]);
     const searchResultsRef = useRef(searchResults);
     searchResultsRef.current = searchResults;
-    const [resultPick, setResultPick] = useState();
+    const [resultPick, setResultPick] = useState({});
+    const [previouseResultPick, setPreviousResultPick] = useState({});
 
-    async function handleContinue() {
-        const randomResult = await Math.floor(Math.random() * searchResults.length);
+    const handleContinue = async function () {
+        const randomResult = Math.floor(Math.random() * searchResults.length);
+        if(!!resultPick){
+            setPreviousResultPick(resultPick);
+        }
         setResultPick(searchResults[randomResult]);
-        console.log(resultPick);
     }
 
+    useLayoutEffect(() => {
+        handleContinue();
+    }, [searchResults]);
     
     useEffect(() => {
         if(date1 && date2){
-            enterRabbitHole(date1, date2).then((data) => {
+            enterRabbitHole(date1, date2).then(async (data) => {
                 if(data.results){
-                    setSearchResults(data.results);
-                    console.log(searchResults);
-                    handleContinue()
+                    setSearchResults(data.results)
                 }
             }).catch((err) => {
                 console.log(err);
@@ -47,12 +51,8 @@ function SearchResults() {
         }, 3000);
     }, []);
 
-    console.log(date1, date2);
-    console.log(searchResults);
-    console.log(resultPick);
-    
 
-    return (!searchResults || searchResults.length===0) ? (
+    return (!resultPick || !searchResults) ? (
     <div id='loadingDiv' className='uk-container uk-margin-small-left'>
         <h1 id='Loading'>Loading...</h1>
     </div>
@@ -67,7 +67,7 @@ function SearchResults() {
                     <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
-                        <p className="text-past" id="text-past"></p>
+                        <p className="text-past" id="text-past">{(JSON.stringify(previouseResultPick) !== '{}') ? previouseResultPick.product_description.split(',')[0] : ''}</p>
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">

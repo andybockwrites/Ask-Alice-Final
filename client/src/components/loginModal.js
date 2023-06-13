@@ -5,24 +5,26 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/mutations";
+import { LOGIN_USER, ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
 function LoginModal(props) {
-    const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [signingUp, setSigningUp] = useState(false);
   
 
   // declaring loginUser with useMutation || both currently undefined   
   const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [addUser, { error: addError }] = useMutation(ADD_USER);
 
 
   useEffect(() => {
-    if (error) setShowAlert(true);
+    if (error || addError) setShowAlert(true);
     else setShowAlert(false);
-  }, [error]);
+  }, [error, addError]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -40,14 +42,26 @@ function LoginModal(props) {
     }
 
     // use loginUser function || not yet defined
-    try {
-      const { data } = await loginUser({
-        variables: { ...userFormData },
-      });
+    if(!signingUp){
+      try {
+        const { data } = await loginUser({
+          variables: { ...userFormData },
+        });
+  
+        Auth.login(data.login.token);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      try {
+        const { data } = await addUser({
+          variables: { ...userFormData },
+        });
 
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
+        Auth.login(data.addUser.token);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     setUserFormData({
@@ -64,7 +78,7 @@ function LoginModal(props) {
       centered
     >
       <Modal.Header closeButton>
-            <Modal.Title>Log In</Modal.Title>
+            <Modal.Title>{!signingUp ? 'Log In' : 'Sign Up'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
@@ -76,6 +90,23 @@ function LoginModal(props) {
               >
                 Something went wrong with your login credentials!
               </Alert>
+              {signingUp ? (
+                <Form.Group className="mb-3">
+                <Form.Label htmlFor="username">Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Your username"
+                  name="username"
+                  id="username"
+                  onChange={handleInputChange}
+                  value={userFormData.username}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Email is required!
+                </Form.Control.Feedback>
+              </Form.Group>
+              ): <></>}
               <Form.Group className="mb-3">
                 <Form.Label htmlFor="email">Email</Form.Label>
                 <Form.Control
@@ -118,6 +149,7 @@ function LoginModal(props) {
             </Form>
           </Modal.Body>
           <Modal.Footer>
+            <button className="linkButton" onClick={() => setSigningUp(!signingUp)}>{!signingUp ? 'No account? Sign up instead' : 'Already have an account? Log in instead'}</button>
           </Modal.Footer>
     </Modal>
   );
