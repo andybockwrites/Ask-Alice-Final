@@ -19,7 +19,9 @@ function SearchResults() {
 
     const handleContinue = async function () {
         const randomResult = Math.floor(Math.random() * searchResults.length);
-        setPreviousResultPick(resultPick);
+        if(!!resultPick){
+            setPreviousResultPick(resultPick);
+        }
         setResultPick(searchResults[randomResult]);
     }
 
@@ -49,6 +51,7 @@ function SearchResults() {
         }, 3000);
     }, []);
 
+
     return (!resultPick || !searchResults) ? (
     <div id='loadingDiv' className='uk-container uk-margin-small-left'>
         <h1 id='Loading'>Loading...</h1>
@@ -64,7 +67,7 @@ function SearchResults() {
                     <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
-                        <p className="text-past" id="text-past">{previouseResultPick.product_description.split(',')[0]}</p>
+                        <p className="text-past" id="text-past">{(JSON.stringify(previouseResultPick) !== '{}') ? previouseResultPick.product_description.split(',')[0] : ''}</p>
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">

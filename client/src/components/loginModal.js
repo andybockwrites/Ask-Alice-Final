@@ -10,9 +10,10 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 function LoginModal(props) {
-    const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [signingUp, setSigningUp] = useState(false);
   
 
   // declaring loginUser with useMutation || both currently undefined   
@@ -64,7 +65,7 @@ function LoginModal(props) {
       centered
     >
       <Modal.Header closeButton>
-            <Modal.Title>Log In</Modal.Title>
+            <Modal.Title>{!signingUp ? 'Log In' : 'Sign Up'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
@@ -76,6 +77,23 @@ function LoginModal(props) {
               >
                 Something went wrong with your login credentials!
               </Alert>
+              {signingUp ? (
+                <Form.Group className="mb-3">
+                <Form.Label htmlFor="username">Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Your username"
+                  name="username"
+                  id="username"
+                  onChange={handleInputChange}
+                  value={userFormData.username}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Email is required!
+                </Form.Control.Feedback>
+              </Form.Group>
+              ): <></>}
               <Form.Group className="mb-3">
                 <Form.Label htmlFor="email">Email</Form.Label>
                 <Form.Control
@@ -118,6 +136,7 @@ function LoginModal(props) {
             </Form>
           </Modal.Body>
           <Modal.Footer>
+            <button className="linkButton" onClick={() => setSigningUp(!signingUp)}>{!signingUp ? 'No account? Sign up instead' : 'Already have an account? Log in instead'}</button>
           </Modal.Footer>
     </Modal>
   );

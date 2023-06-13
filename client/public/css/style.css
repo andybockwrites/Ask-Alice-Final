@@ -118,6 +118,22 @@ h1 {
     height: 200px;
 }
 
+.linkButton{
+    background: none;
+    color:blue;
+    border: none;
+    width:fit-content;
+}
+
+.linkButton:hover{
+    color: rgb(84, 84, 245);
+    text-decoration: underline;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+}
+
 
     
 
