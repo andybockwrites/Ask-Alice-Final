@@ -80,6 +80,13 @@ footer {
 .back-button{
     background-color: rgb(245, 120, 17);
     color: beige;
+    display: flex;
+    align-items: center;
+}
+
+.back-button a {
+    color: beige;
+    text-decoration: none;
 }
 
 .back-button:hover {
