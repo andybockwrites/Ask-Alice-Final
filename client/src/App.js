@@ -11,8 +11,6 @@ import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import Error from './pages/Error';
 import Header from './components/header';
-import Footer from './components/footer';
-import logo from './logo.svg';
 import './App.css';
 
 const httpLink = createHttpLink({

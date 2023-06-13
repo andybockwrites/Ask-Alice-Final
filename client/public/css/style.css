@@ -65,6 +65,10 @@ h1 {
     text-align: center;
 }
 
+.instructions h3, .instructions h5 {
+    margin-bottom: 10px;
+}
+
 .search-container {
     display: flex;
     flex-direction: row;
