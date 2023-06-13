@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useLayoutEffect, useState, useRef} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../components/footer';
 import images from '../utils/images';
@@ -14,22 +14,22 @@ function SearchResults() {
     const [searchResults, setSearchResults] = useState([]);
     const searchResultsRef = useRef(searchResults);
     searchResultsRef.current = searchResults;
-    const [resultPick, setResultPick] = useState();
+    const [resultPick, setResultPick] = useState({});
 
-    async function handleContinue() {
-        const randomResult = await Math.floor(Math.random() * searchResults.length);
+    const handleContinue = async function () {
+        const randomResult = Math.floor(Math.random() * searchResults.length);
         setResultPick(searchResults[randomResult]);
-        console.log(resultPick);
     }
 
+    useLayoutEffect(() => {
+        handleContinue();
+    }, [searchResults]);
     
     useEffect(() => {
         if(date1 && date2){
-            enterRabbitHole(date1, date2).then((data) => {
+            enterRabbitHole(date1, date2).then(async (data) => {
                 if(data.results){
-                    setSearchResults(data.results);
-                    console.log(searchResults);
-                    handleContinue()
+                    setSearchResults(data.results)
                 }
             }).catch((err) => {
                 console.log(err);
@@ -47,12 +47,7 @@ function SearchResults() {
         }, 3000);
     }, []);
 
-    console.log(date1, date2);
-    console.log(searchResults);
-    console.log(resultPick);
-    
-
-    return (!searchResults || searchResults.length===0) ? (
+    return (!resultPick || !searchResults) ? (
     <div id='loadingDiv' className='uk-container uk-margin-small-left'>
         <h1 id='Loading'>Loading...</h1>
     </div>
