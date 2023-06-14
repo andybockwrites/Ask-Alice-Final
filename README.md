@@ -50,7 +50,7 @@ N/A
 
 ## Links
 
-[Ask Alice](https://www.ask-alice.herokuapp.com)
+[Ask Alice](https://ask-alice.herokuapp.com)
 
 Developed by: 
 
