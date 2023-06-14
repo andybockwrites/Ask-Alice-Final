@@ -23,7 +23,8 @@ const resolvers = {
             return Carrot.find(params).sort({ createdAt: -1 });
         },
         carrotsByDrugName: async (parent, { drugName }) => {
-            return Carrot.find({ drugName }).sort({ createdAt: -1 });
+            const results = await Carrot.findOne({ drugName: drugName }).populate('carrots');
+            return results;
         },
     },
 
@@ -53,7 +54,9 @@ const resolvers = {
 
         addCarrot: async (parent, args, context) => {
             const user_id = context.user ? context.user._id : args.userId;
-            const carrot = await Carrot.create({ ...args, user_id });
+            const carrot = await Carrot.create({ ...args});
+
+            await Carrot.findByIdAndUpdate({_id: carrot._id}, {$addToSet: {carrots: user_id}}, {new: true});
 
             await User.findByIdAndUpdate(
                 { _id: user_id },
@@ -64,7 +67,7 @@ const resolvers = {
         },
 
         removeCarrot: async (parent, { carrotId }, context) => {
-            const carrot = await Carrot.findOneAndDelete({ _id: carrotId });
+            const carrot = await Carrot.findOneAndUpdate({ _id: carrotId }, { $pull: { carrots: context.user._id } }, { new: true });
 
             if(context.user) {
                 const user = await User.findOneAndUpdate(

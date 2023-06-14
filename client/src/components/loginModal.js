@@ -88,7 +88,7 @@ function LoginModal(props) {
                 show={showAlert}
                 variant="danger"
               >
-                Something went wrong with your login credentials!
+                {signingUp ? 'Something went wrong! Your Username may be taken.':'Something went wrong with your login credentials!'}
               </Alert>
               {signingUp ? (
                 <Form.Group className="mb-3">

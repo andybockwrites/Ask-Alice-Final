@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose; 
+const { Schema } = mongoose;
 
 const carrotSchema = new Schema({
     drugName: {
@@ -14,11 +14,13 @@ const carrotSchema = new Schema({
         required: true,
     },
 
-    user_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
+    carrots: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            default: undefined
+        }
+    ]
 });
 
 const Carrot = mongoose.model('Carrot', carrotSchema);

@@ -19,6 +19,7 @@ function SearchResults() {
     const [previousResultPick, setPreviousResultPick] = useState({});
 
     const handleContinue = async function () {
+        console.log(searchResults);
         const randomResult = Math.floor(Math.random() * searchResults.length);
         if(!!resultPick){
             setPreviousResultPick(resultPick);
@@ -27,7 +28,9 @@ function SearchResults() {
     }
 
     useLayoutEffect(() => {
-        handleContinue();
+        if(searchResults.length > 0){
+            handleContinue();
+        }
     }, [searchResults]);
     
     useEffect(() => {
@@ -52,8 +55,7 @@ function SearchResults() {
         }, 3000);
     }, []);
 
-
-    return (!resultPick || !searchResults) ? (
+    return ((JSON.stringify(resultPick) === '{}') || (searchResults.length === 0)) ? (
     <div id='loadingDiv' className='uk-container uk-margin-small-left'>
         <h1 id='Loading'>Loading...</h1>
     </div>
@@ -105,7 +107,7 @@ function SearchResults() {
                     </div>
                 </div>
             </div>
-            <Footer resultsAmount={searchResults.length}/>
+            <Footer resultsAmount={searchResults.length} resultName={resultPick.product_description.split(',')[0]} resultParent={resultPick.recalling_firm}/>
         </div>
     )
 };
