@@ -21,6 +21,9 @@ export const QUERY_CARROTS_BY_DRUGNAME = gql`
             _id
             drugName
             parentCompany
+            carrots {
+                _id
+            }
         }
     }
 `;
