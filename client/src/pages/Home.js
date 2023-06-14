@@ -40,7 +40,7 @@ const Home = ({ currentPage, handlePageChange }) => {
           <h5 className="brown font-display-bold">
             To go down the Rabbit Hole, scroll down and select two dates below!
           </h5>
-          <h6>The White Rabbit will show you the prescription drugs that have been recalled within that range.</h6>
+          <blockquote>The White Rabbit will show you the prescription drugs that have been recalled within that range.</blockquote>
         </div>
         <img src={bunny} alt="a white rabbit" className="rabbit" />
         <div className="search-container">

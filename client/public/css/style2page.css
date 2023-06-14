@@ -3,6 +3,12 @@
     --red: #F57676;
     --grey: #D9D9D9;
     --brown: #362412;
+/*Array of Colors*/
+    --turquiose: turquoise;
+    --purple: rgb(201, 0, 201);
+    --yellow: rgb(201, 201, 0);
+    --pink: rgb(255, 158, 158);
+    --green: rgb(163, 234, 163);
 }
 
 aside {
@@ -21,7 +27,7 @@ h2 {
 
 h4 {
     font-size: 30px;
-    margin-left: 18%;
+    margin-left: 24%;
 }
 
 h3 {

@@ -68,7 +68,7 @@ function SearchResults() {
                     <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
-                        <p className="text-past" id="text-past">{(JSON.stringify(previouseResultPick) !== '{}') ? previouseResultPick.product_description.split(',')[0] : ''}</p>
+                        {/* <p className="text-past" id="text-past">{(JSON.stringify(previouseResultPick) !== '{}') ? previouseResultPick.product_description.split(',')[0] : ''}</p> */}
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">
@@ -83,7 +83,7 @@ function SearchResults() {
                             <div className="newInfo uk-flex-right">
 
                                 <h4 className="brown font-display">Recall Date: <span id="iniDate">{dayjs(resultPick.recall_initiation_date).format('M/D/YY')}</span> </h4>
-                                <h3 className="brown font-display-bold" id="">Firm: <span id="firm">{resultPick.recalling_firm}</span></h3>
+                                <h3 className="brown font-display-bold" id="">Parent: <span id="firm">{resultPick.recalling_firm}</span></h3>
                             </div>
                         </div>
                         <div className="comment uk-margin-small right" id="box">
