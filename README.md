@@ -56,7 +56,7 @@ Developed by:
 
 [Andrew Bock](https://www.github.com/andybockwrites)
 
-[Alex Brooks](https://www.github.com/Norboro1)
+[AJ Brook](https://www.github.com/Norboro1)
 
 [Chris Wilson](https://www.github.com/Cwilson84)
 
