@@ -16,7 +16,7 @@ function SearchResults() {
     const searchResultsRef = useRef(searchResults);
     searchResultsRef.current = searchResults;
     const [resultPick, setResultPick] = useState({});
-    const [previouseResultPick, setPreviousResultPick] = useState({});
+    const [previousResultPick, setPreviousResultPick] = useState({});
 
     const handleContinue = async function () {
         const randomResult = Math.floor(Math.random() * searchResults.length);
@@ -68,7 +68,7 @@ function SearchResults() {
                     <br></br>
                     <div className="recalled" id="recalled">
                         <h4 id="lastRec">Last product recalled:</h4>
-                        {/* <p className="text-past" id="text-past">{(JSON.stringify(previouseResultPick) !== '{}') ? previouseResultPick.product_description.split(',')[0] : ''}</p> */}
+                        <p className="text-past" id="text-past">{(JSON.stringify(previousResultPick) !== '{}') ? previousResultPick.product_description.split(',')[0] : ''}</p>
                     </div>
                 </aside>
                 <div className="uk-container uk-width-2-3 uk-align-right drug-info ">
@@ -105,7 +105,7 @@ function SearchResults() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer resultsAmount={searchResults.length}/>
         </div>
     )
 };

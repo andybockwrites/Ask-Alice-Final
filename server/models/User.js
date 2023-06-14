@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Carrot = require('./Carrot');
 
 const userSchemas = new Schema({
     username: {
@@ -24,11 +23,19 @@ const userSchemas = new Schema({
         required: true,
         minlength: [8, 'Password must be at least 8 characters long.']
     },
-    carrots: [Carrot.schema]
+    carrots:
+    [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Carrot',
+            default: undefined
+        }
+    ]
+
 });
 
 userSchemas.pre('save', async function (next) {
-    if(this.isNew || this.isModified('password')) {
+    if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
     }

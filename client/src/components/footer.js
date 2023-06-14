@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import bunny from "../assets/bunny.jpg";
 import WhiteRabbit from "./whiteRabbit";
 
-const Footer = () => {
+const Footer = ({resultsAmount}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [carrotData, setCarrotData] = useState({
     drugName: '',
@@ -45,7 +45,7 @@ const Footer = () => {
     <footer className="uk-flex-inline uk-margin-large-left uk-margin-large-right uk-margin-bottom">
       <div className="footer-text uk-text-center">
         <h6 className=" brown uk-text-small uk-text-lighter">The Rabbit says:</h6>
-        <h5 className="brown uk-text-large">"There are <span id="count2"></span> recalls in this rabbit hole!"</h5>
+        <h5 className="brown uk-text-large">"There are <span id="count2">{resultsAmount}</span> recalls in this rabbit hole!"</h5>
         <h3 className="brown uk-text-large uk-text-bold">What do you want to do now?</h3>
         <blockquote>Click the bunny to feed it a carrot! Cross your fingers first, though. One can never be too sure...</blockquote>
       </div>

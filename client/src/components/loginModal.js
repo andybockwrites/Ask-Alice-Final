@@ -103,7 +103,7 @@ function LoginModal(props) {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Email is required!
+                  Username is required!
                 </Form.Control.Feedback>
               </Form.Group>
               ): <></>}

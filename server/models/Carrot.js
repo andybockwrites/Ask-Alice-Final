@@ -6,7 +6,7 @@ const carrotSchema = new Schema({
     drugName: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
 
     parentCompany: {
