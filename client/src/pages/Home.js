@@ -43,22 +43,26 @@ const Home = ({ currentPage, handlePageChange }) => {
           <blockquote>The White Rabbit will show you the prescription drugs that have been recalled within that range.</blockquote>
         </div>
         <img src={bunny} alt="a white rabbit" className="rabbit" />
-        <div className="search-container">
-          <div className="calendar-container-from">
+        <div className="search-container uk-flex uk-flex-inline uk-flex-between ">
+          <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-medium-right">
             <h5 className="brown font-display-bold">Start Date</h5>
             <DatePicker id="from"
+            className="testPicker"
+            autoComplete="off"
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
             minDate={dayjs("20120101").toDate()}
-            maxDate={new Date()}/>
+            maxDate={new Date()} />
           </div>
           <h3 className="brown font-display-bold">TO</h3>
-          <div className="calendar-container-to">
+          <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-medium-left">
             <h5 className="brown font-display-bold">End Date</h5>
             <DatePicker id="to"
+            className="testPicker"
+            autoComplete="off"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             showMonthDropdown

@@ -25,9 +25,9 @@ h2 {
     align-items: center;
 }
 
-h4 {
+.recalledH4 {
     font-size: 30px;
-    margin-left: 24%;
+    margin-left: 15%;
 }
 
 h3 {
@@ -250,6 +250,37 @@ text-align: right;
     justify-content: center;
 }
 
+@media screen and (max-width: 850px) {
+    .resultsContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .drug-info {
+        align-items: center;
+    }
+
+    .recalled {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .drug-info {
+        width: 100%;
+    }
+
+    .recalledH4 {
+        text-align: center;
+        margin-left:  0%;
+    }
+
+    .text-past {
+        margin-left: 0%;
+    }
+
+}
+
 @media (min-width: 1024) and (max-width: 1844) {
 
     body
@@ -387,3 +418,5 @@ text-align: right;
         font-size: 80%;
     }
 };
+
+
