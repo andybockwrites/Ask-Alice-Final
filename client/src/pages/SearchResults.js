@@ -2,13 +2,15 @@ import React, {useEffect, useLayoutEffect, useState, useRef} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Footer from '../components/footer';
 import images from '../utils/images';
+import colors from '../utils/colors';
 import enterRabbitHole from '../utils/apiCall';
 import dayjs from 'dayjs';
 import Auth from '../utils/auth';
 
 
 function SearchResults() {
-    const imageChoice = Math.floor(Math.random() * 5);
+    const [imageChoice, setImageChoice] = useState(Math.floor(Math.random() * 5))
+    const [colorChoice, setColorChoice] = useState(Math.floor(Math.random() * 5))
     const [queryParameters] = useSearchParams();
     const date1 = queryParameters.get('date1');
     const date2 = queryParameters.get('date2');
@@ -21,6 +23,18 @@ function SearchResults() {
     const handleContinue = async function () {
         console.log(searchResults);
         const randomResult = Math.floor(Math.random() * searchResults.length);
+        let newImageChoice = Math.floor(Math.random() * 5);
+        let newColorChoice  = Math.floor(Math.random() * 5);
+        while(newImageChoice === imageChoice){
+            newImageChoice = await Math.floor(Math.random() * 5);
+        }
+        while(newColorChoice === colorChoice){
+            newColorChoice = await Math.floor(Math.random() * 5);
+        }
+
+        setImageChoice(newImageChoice);
+        setColorChoice(newColorChoice);
+        
         if(!!resultPick){
             setPreviousResultPick(resultPick);
         }
@@ -55,14 +69,14 @@ function SearchResults() {
         }, 3000);
     }, []);
 
-    return ((JSON.stringify(resultPick) === '{}') || (searchResults.length === 0)) ? (
+    return ((JSON.stringify(resultPick) === '{}') || (searchResults.length === 0) ) ? (
     <div id='loadingDiv' className='uk-container uk-margin-small-left'>
         <h1 id='Loading'>Loading...</h1>
     </div>
     ) : 
     ( 
-        <div>
-            <div className="uk-flex resultsContainer">
+        <div className="testClass">
+            <div className={"uk-flex resultsContainer " + colors[colorChoice]}>
                 <aside className="uk-width-1-3">
                     <div className="image-container">
                         <img id="image-api" alt="meds" src={images[imageChoice]} />
