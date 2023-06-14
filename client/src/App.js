@@ -39,7 +39,7 @@ function App() {
       <Router>
         <div>
           <Header />
-          <div class="uk-flex uk-flex-center">
+          <div className="uk-flex uk-flex-center">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/searchresults" element={<SearchResults />} />
