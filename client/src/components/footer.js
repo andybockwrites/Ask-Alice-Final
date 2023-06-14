@@ -10,54 +10,85 @@ const Footer = ({ resultsAmount, resultName, resultParent }) => {
   const [addCarrot, {error}] = useMutation(ADD_CARROT);
   const [removeCarrot, {error: removeError}] = useMutation(REMOVE_CARROT);
   const [isHovered, setIsHovered] = useState(false);
+  const [carrotCount, setCarrotCount] = useState(0);
   const [carrotData, setCarrotData] = useState({
     drugName: resultName,
     parentCompany: resultParent,
   });
+
+  const [getCarrot, { loading, data}] = useLazyQuery(QUERY_CARROTS_BY_DRUGNAME, {variables: {drugName: resultName}, fetchPolicy: 'network-only'});
+
+  const getCarrotCount = (data) => {
+    console.log('got carrot count');
+    if(!data.carrotsByDrugName){
+      console.log('no carrots');
+      setCarrotCount(0);
+    } else {
+      setCarrotCount(data.carrotsByDrugName.carrots.length);
+    }
+  }
   
-  const testFunction = async (data) => {
+  const addRemoveCarrot = async (data) => {
     console.log('got data');
     console.log(data);
 
-    if(!data.carrotsByDrugName){
+    const carrot = data.carrotsByDrugName;
+
+    if(!carrot){
       try {
         console.log('trying to add carrot')
         const { data } = await addCarrot({
           variables: { ...carrotData, userId: Auth.getProfile().data._id },
         });
         console.log(data);
+        setCarrotCount(carrotCount + 1)
+        return;
+      } catch (e) {
+        console.error(e);
+        return;
+      } 
+    } else{
+      console.log('carrot already exists');
+      console.log(carrot);
+
+      for(let i of carrot.carrots){
+        if(i._id === Auth.getProfile().data._id){
+          console.log('removing carrot');
+          try {
+            console.log(carrot._id);
+            const data = await removeCarrot({ variables: {carrotId: carrot._id}});
+            console.log(data);
+            setCarrotCount(carrotCount - 1)
+          } catch (e) {
+            console.error(e);
+          } 
+          return;
+        }
+      }
+
+      try {
+        console.log('trying to add carrot')
+        const { data } = await addCarrot({
+          variables: { ...carrotData, userId: Auth.getProfile().data._id },
+        });
+        console.log(data);
+        setCarrotCount(carrotCount + 1)
       } catch (e) {
         console.error(e);
       } 
-    }
 
-    else{
-      console.log('carrot already exists');
     }
   } 
-
-  const [getCarrot, { loading, data}] = useLazyQuery(QUERY_CARROTS_BY_DRUGNAME, {variables: {drugName: resultName}, fetchPolicy: 'cache-and-network',
-  });
 
   useEffect(() => {
     setCarrotData({ drugName: resultName, parentCompany: resultParent });
     console.log(carrotData);
+    getCarrot({variables: {drugName: resultName}, fetchPolicy: 'network-only', onCompleted: (data) => getCarrotCount(data)});
   }, [resultName, resultParent]);
 
   useLayoutEffect(() => {
     console.log(carrotData);
   }, [carrotData]);
-  /* useEffect(() => {
-    // Fetch the data from the API || Handle the success response and update the carrotData state with the received data
-
-    
-    const apiResponse = {
-      drugName: '', // dynamically generate with api response
-      parentCompany: '', // dynamically generate with api response
-    };
-
-    setCarrotData(apiResponse);
-  }); */
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -77,12 +108,8 @@ const Footer = ({ resultsAmount, resultName, resultParent }) => {
     console.log(Auth.getProfile().data._id);
 
     console.log(resultName);
-    getCarrot({variables: {drugName: resultName}, fetchPolicy: 'cache-and-network', onCompleted: (data) => testFunction(data)});
+    await getCarrot({variables: {drugName: resultName}, fetchPolicy: 'network-only', onCompleted: (data) => addRemoveCarrot(data)});
 
-    /* console.log(loading)
-    console.log(data) */
-
-    
     };
 
     if(loading){
@@ -98,6 +125,7 @@ const Footer = ({ resultsAmount, resultName, resultParent }) => {
         <h5 className="brown uk-text-large">"There are <span id="count2">{resultsAmount}</span> recalls in this rabbit hole!"</h5>
         <h3 className="brown uk-text-large uk-text-bold">What do you want to do now?</h3>
         <blockquote>Click the bunny to feed it a carrot! Cross your fingers first, though. One can never be too sure...</blockquote>
+        <p>The bunny has been given <strong>{carrotCount} 🥕</strong> for this recall</p>
       </div>
       <img
         src={bunny}

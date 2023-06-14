@@ -191,6 +191,7 @@ text-align: right;
     flex-direction: column;
     text-align: right;
     align-items: center;
+    height: fit-content;
     float: right;
     padding-top: 15px;
     border: solid whitesmoke 5px;
