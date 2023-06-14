@@ -111,10 +111,6 @@ const Footer = ({ resultsAmount, resultName, resultParent }) => {
     await getCarrot({variables: {drugName: resultName}, fetchPolicy: 'network-only', onCompleted: (data) => addRemoveCarrot(data)});
 
     };
-
-    if(loading){
-      return <h1>Loading...</h1>
-    }
   // Save the new carrot to the backend
   // Handle the success or error response accordingly
   // };
@@ -125,7 +121,7 @@ const Footer = ({ resultsAmount, resultName, resultParent }) => {
         <h5 className="brown uk-text-large">"There are <span id="count2">{resultsAmount}</span> recalls in this rabbit hole!"</h5>
         <h3 className="brown uk-text-large uk-text-bold">What do you want to do now?</h3>
         <blockquote>Click the bunny to feed it a carrot! Cross your fingers first, though. One can never be too sure...</blockquote>
-        <p>The bunny has been given <strong>{carrotCount} 🥕</strong> for this recall</p>
+        <p>The bunny has been given <strong>{loading ? '...':carrotCount} 🥕</strong> for this recall</p>
       </div>
       <img
         src={bunny}

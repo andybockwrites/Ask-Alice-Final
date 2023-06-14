@@ -62,14 +62,14 @@ function SearchResults() {
     ) : 
     ( 
         <div>
-            <div className="uk-flex">
+            <div className="uk-flex resultsContainer">
                 <aside className="uk-width-1-3">
                     <div className="image-container">
                         <img id="image-api" alt="meds" src={images[imageChoice]} />
                     </div>
                     <br></br>
                     <div className="recalled" id="recalled">
-                        <h4 id="lastRec">Last product recalled:</h4>
+                        <h4 id="lastRec" className='recalledH4'>Last product recalled:</h4>
                         <p className="text-past" id="text-past">{(JSON.stringify(previousResultPick) !== '{}') ? previousResultPick.product_description.split(',')[0] : ''}</p>
                     </div>
                 </aside>
