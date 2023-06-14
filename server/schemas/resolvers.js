@@ -54,28 +54,36 @@ const resolvers = {
 
         addCarrot: async (parent, args, context) => {
             const user_id = context.user ? context.user._id : args.userId;
-            const carrot = await Carrot.create({ ...args});
+            let carrot = await Carrot.findOne({ drugName: args.drugName });
+            console.log(!carrot);
 
-            await Carrot.findByIdAndUpdate({_id: carrot._id}, {$addToSet: {carrots: user_id}}, {new: true});
+            if(!carrot) {
+                carrot = await Carrot.create({ ...args});
+                await Carrot.findByIdAndUpdate(carrot._id, {$addToSet: {carrots: user_id}}, {new: true});
+            } else{
+                await Carrot.findByIdAndUpdate(carrot._id, {$addToSet: {carrots: user_id}}, {new: true});
+            }
 
-            await User.findByIdAndUpdate(
-                { _id: user_id },
+            const user = await User.findByIdAndUpdate(
+                user_id,
                 { $addToSet: { carrots: carrot._id } },
             );
+
+            console.log(user);
 
             return carrot;
         },
 
-        removeCarrot: async (parent, { carrotId }, context) => {
-            const carrot = await Carrot.findOneAndUpdate({ _id: carrotId }, { $pull: { carrots: context.user._id } }, { new: true });
+        removeCarrot: async (parent, { carrotId, userId }, context) => {
+            const user_id = context.user ? context.user._id : userId;
 
-            if(context.user) {
-                const user = await User.findOneAndUpdate(
-                    { _id: context.user._id },
+            const carrot = await Carrot.findByIdAndUpdate({ _id: carrotId }, { $pull: { carrots: user_id } }, { new: true });
+
+                const user = await User.findByIdAndUpdate(
+                    { _id: user_id },
                     { $pull: { carrots: carrotId } },
                     { new: true }
                 );
-            }
 
             return context.user ? { ...carrot, user } : carrot;
         },
